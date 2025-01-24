@@ -2,10 +2,17 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
+import {rateLimit} from 'express-rate-limit'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const limit = rateLimit({
+    windowMs : 15*60*1000,
+    max:5,
+    message:"your limits exceed"
+})
+app.use(limit)
 // Middleware to handle JSON request bodies
 app.use(express.json());
 
